@@ -1,0 +1,9 @@
+# Series_Tiempo
+### 03 de febrero del 2017
+data ("AirPassengers")
+class (AirPassengers)
+start (AirPassengers) #Muestra cuando inicia la ST
+end (AirPassengers) #Muestra cuando termina la ST
+frequency (AirPassengers) #Muestra la frecuencia de la ST
+summary (AirPassengers) #Resumen de los datos de la ST
+plot (AirPassengers) #Grafica la ST
