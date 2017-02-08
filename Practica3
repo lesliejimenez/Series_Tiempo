@@ -1,0 +1,30 @@
+# Series_Tiempo
+# 8 de febrero de 2017
+
+# Simulacion de series de tiempo
+# Simulacion de 1 marcador
+# Informacion necesaria: minimo, maximo y numero de datos
+# Poblacion en Mexico
+# Min=100    Max=120    Num. de datos= 15    Inicia en el año 2000
+pob <- sample (100:120, 15, replace = F)
+pob
+
+# La convertimos en una serie de tiempo
+pobts <- ts (pob, frequency = 1, start = (2000)) #Frecuencia anual
+end (pobts)
+plot (pobts)
+plot (aggregate (pobts))
+
+infor <- ts(read.csv(("C:\\Users\\Gema\\Documents\\Gema\\Universidad\\8vo semestre\\Series de Tiempo\\Informacion.csv"), header = T),frequency = 4, start= (2005))
+infor
+
+# Se exportan las bases 10.2, 10.3,10.5 y 10.7 
+Basebien <- data.frame(read.csv("C:\\Users\\Gema\\Documents\\Gema\\Universidad\\8vo semestre\\Series de Tiempo\\Indicadoresbien.csv"))
+Desocupado <- ts(Basebien[,1], frequency = 4, start = 2005)
+Ocupado <- ts(Basebien[,2], frequency = 4, start = 2005)
+Asalariado <- ts(Basebien[,3], frequency = 4, start = 2005)
+Condiciones <- ts(Basebien[,4], frequency = 4, start = 2005)
+plot(Basebien)
+
+indicadores <- ts(read.csv(("C:\\Users\\Gema\\Documents\\Gema\\Universidad\\8vo semestre\\Series de Tiempo\\Indicadoresbien.csv"), header = T), frequency = 4, start = (2005))
+indicadores
