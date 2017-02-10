@@ -1,0 +1,70 @@
+# Series_Tiempo
+# 10 de febrero del 2017
+
+# Generar 4 objetos con datos aleatorios y que tengan 60 datos
+#  Objeto 1 # de profesionistas (millones) rango de 5 a 8
+#  Objeto 2 crecimiento del PIB, rango de 0 a 5
+#  Objeto 3 porcentaje de ocupados, rango de 40 a 60
+#  Objeto 4 porcentaje de desocupados, rengo de 3 a 8
+
+profesionistas <- sample(5:8, 60, replace = TRUE)
+crec_PIB <- sample(0:5, 60, replace = TRUE)
+ocupados_por <- sample(40:60, 60, replace = TRUE)
+desocupados_por <- sample(3:8, 60, replace = TRUE)
+
+# Generar data. frame
+
+base1 <- data.frame(profesionistas, crec_PIB, ocupados_por, desocupados_por)
+
+# Mostrar en consola los primeros 12 y los últimos 12 datos
+
+base1 [1:12,] #primeros 12 datos
+base1 [49:60,] #últimos datos
+base2 <- base1[1:12,]
+
+# Convertir los objetos en series de tiempo comenzando en 2010 mensualmente
+
+profesionistas_serie <- ts(profesionistas, frequency = 12, start = 2010)
+profesionistas_serie
+
+crec_PIB_serie <- ts(crec_PIB, frequency = 12, start = 2010)
+crec_PIB_serie
+
+ocupados_por_serie <- ts(ocupados_por, frequency = 12, start = 2010)
+ocupados_por_serie
+
+desocupados_por_serie <- ts(desocupados_por, frequency = 12, start = 2010)
+desocupados_por_serie
+
+# Graficar series de tiempo en una sola gráfica (profesionistas y ocupados)
+
+plot(cbind(profesionistas_serie, ocupados_por_serie))
+
+#Graficar serie de tiempo (PIB y desocupados)
+
+plot(cbind(crec_PIB_serie, desocupados_por_serie))
+
+#Graficar todas las series de tiempo
+
+plot(cbind(profesionistas_serie, ocupados_por_serie, crec_PIB_serie, desocupados_por_serie))
+
+base3 <- data.frame(profesionistas_serie,crec_PIB_serie,ocupados_por_serie,desocupados_por_serie)
+plot.ts(base3[,c(1,3)])
+
+
+
+PIB_Mexico <- data.frame(read.csv("C:\\Users\\SALA-D31\\Desktop\\PIB México.csv"))
+
+PIB_1980a1990 <- ts(PIB_Mexico[1:11,], frequency = 1, start = 1980)
+PIB_1980a1990
+
+PIB_1991a2000 <- ts(PIB_Mexico[12:21,], frequency = 1, start = 1991)
+PIB_1991a2000
+
+PIB_2001a2010 <- ts(PIB_Mexico[22:31,], frequency = 1, start = 2001)
+PIB_2001a2010
+
+PIB_2011a2015 <- ts(PIB_Mexico[32:36,], frequency = 1, start = 2011)
+PIB_2011a2015
+
+plot(cbind(PIB_1991a2000,PIB_2001a2010))
