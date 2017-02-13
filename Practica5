@@ -1,0 +1,39 @@
+# Series_Tiempo
+### 13 de febrero del 2017
+
+## Series de tiempo múltiple
+seriemultiple <- ts.intersect(desocupadosts, num_profts, ocupadosts, crec_pibts)
+plot(seriemultiple, type="s",main = "Serie de tiempo múltiple", xlab = "Años", ylab = "Número de personas", col = "pink",pch=18)
+help(plot)
+
+# Dividir series de tiempo
+
+seriemultiple_2010_2012 <- window(seriemultiple, start = c(2010,1), end = c(2012,12))
+seriemultiple_2013_2015 <- window(seriemultiple, start = c(2013,1), end = c(2014,12))
+plot(seriemultiple_2010_2012)
+plot(seriemultiple_2013_2015)
+
+
+
+
+pob_desocupada<-data.frame(read.csv("C://Users//SALA-D23//Desktop//Ejercicio.csv"))
+
+edad<-data.frame(pob_desocupada$ÿÿÿÿÿÿDe.25.a.44.a.os)
+educacion<-data.frame(pob_desocupada$ÿÿÿÿÿÿSecundaria.completa)
+desocupacion<-data.frame(pob_desocupada$ÿÿÿÿÿÿM.s.de.6.meses.hasta.1.a.o)
+tasa_desocupados<-data.frame(pob_desocupada$ÿÿÿ10.2..Tasa.de.desocupaci.n)
+edadts <- ts(edad, frequency = 4, start=(2005))
+educacionts<-ts(educacion,frequency = 4,start=(2005))
+desocupacionts<-ts(desocupacion, frequency = 4, start = (2005))
+tasa_desocupadosts<-ts(tasa_desocupados, frequency = 4, start = (2005))
+
+pob_desocupadasm<-ts.intersect(edadts,educacionts,desocupacionts,tasa_desocupadosts)
+plot(pob_desocupadasm, main="Análisis personas desocupadas", xlab="Años", ylab="", col="purple", type="s")
+
+st1<-window(pob_desocupadasm, start=c(2006,1), end=c(2009,12))
+st2<-window(pob_desocupadasm, start=c(2010,1), end=c(2013,12))
+st3<-window(pob_desocupadasm, start=c(2014,1), end=c(2016,1))
+
+plot(st1, main="Análisis personas desocupadas del 2006 al 2009", xlab="Años", ylab="", col="blue", type="p")
+plot(st2, main="Análisis personas desocupadas del 2010 al 2013", xlab="Años", ylab="", col="pink", type="S")
+plot(st3, main="Análisis personas desocupadas del 2014 al 2016", xlab="Años", ylab="", col="red", type="b")
