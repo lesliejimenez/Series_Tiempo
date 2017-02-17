@@ -1,0 +1,33 @@
+# Series_Tiempo
+
+### 17 DE FEBRERO DEL 2017
+
+PIB <- read.csv("C://Users//Leslie Jiménez//Desktop//PIBMEXICO.csv")
+PIBTS <- ts (PIB, frequency = 4, start=(2007))
+plot(PIBTS)
+
+plot(decompose(PIBTS))
+summary(PIBTS)
+
+DESPIBTS <- decompose(PIBTS)
+names(DESPIBTS)
+DESPIBTS$trend
+DESPIBTS$seasonal
+
+# EJERCICIO: DESCOMPONER UNA SERIE DE TIEMPO
+# 1. GRAFICAMENTE
+# 2. mANDAR LLAMAR CADA UNO DE LOS COMPONENTES DE LA SERIE DE TIEMPO
+# 3. REALIZAR UNA INTERPRETACIÓN SOBRE LOS DATOS OBSERVADOS DE LA SERIE DE TIEMPO
+
+# SERIE TASA DE DESOCUPACIÓN
+
+T_DESOCUPACION <- read.csv("C://Users//Leslie Jiménez//Desktop//TASA DE DESOCUPACIÓN.CSV")
+T_DES_TS <- ts (T_DESOCUPACION, frequency = 4, start = (2005))
+plot(T_DES_TS)
+plot(decompose(T_DES_TS))
+DES_T_DES_TS <- decompose(T_DES_TS)
+DES_T_DES_TS$random
+DES_T_DES_TS$seasonal
+DES_T_DES_TS$trend
+
+# Análisis 
