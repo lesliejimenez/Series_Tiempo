@@ -1,0 +1,9 @@
+# Series_Tiempo
+
+### Tarea 17 de febrero del 2017
+
+## Serie de tiempo de la TIIE 2015 primeros tres meses
+
+TIIE2015 <- ts(read.csv("C://Users//Leslie Jiménez//Desktop//TIIE2015.csv"), frequency = 52, start = (2015))
+TIIE2015
+plot(TIIE2015)
