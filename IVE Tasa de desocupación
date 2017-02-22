@@ -1,0 +1,38 @@
+# Series_Tiempo
+# 22 de febrero del 2017
+
+des <- read.csv("/Users/rodrigomondragondillanes/Documents/Series de tiempo/tarea2.csv")
+tsdes <- ts(des,frequency = 4,start = 2005)
+a <- rep(0,45)
+for(i in 1:45){
+  q<-3+i
+  a[i] <- mean(des[i:q,1])
+}
+a
+descomponer <- decompose(tsdes)
+descomponer$trend
+b <- rep(0,44)
+for(i in 1:44){
+  b[i] <- (a[i]+a[i+1])/2
+}
+b #TENDENCIA
+c <- rep(0,44)
+for(i in 1:44){ # MODELO ADITIVO
+  d <- 2+i
+  c[i]<-des[d,1]-b[i]
+}
+c 
+#c <- rep(0,44)
+#for(i in 1:44){ # MODELO MULTIPLICATIVO
+#  d <- 2+i
+#  c[i]<-des[d,1]/b[i]
+#}
+#c 
+dd <- c(NA,NA)
+prueba <- c(dd,c,dd)
+matriz <- matrix(prueba,nrow = 4)
+sum(matriz[1,],na.rm = T)
+IVE <- apply(matriz,1,mean,na.rm=T) # INDICES DE VARIACIONES ESTACIONALES
+IVE
+descomponer$seasonal
+matriz
