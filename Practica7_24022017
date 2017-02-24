@@ -1,0 +1,10 @@
+# Series_Tiempo
+# 24 de febrero del 2017
+
+tsdesocu <- ts(desocu, frequency = 4, start = (2005))
+detsdesocu <- decompose(tsdesocu, type = "multiplicative")
+detsdesocu$trend
+detsdesocu$seasonal
+plot(tsdesocu, col="blue", main="Tasa de desocupación trimestral", ylab="Tasas", xlab="Años")
+lines(detsdesocu$trend, col="red", ylab="Tendencia")
+monthplot(detsdesocu$seasonal, main="IVE", ylab = "IVE Trimestral")
