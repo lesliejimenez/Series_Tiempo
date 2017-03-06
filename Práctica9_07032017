@@ -1,0 +1,22 @@
+# Series de Tiempo
+# 03 de Marzo del 2017
+
+install.packages("fpp")
+require(fpp)
+
+plot(window(elec,start=1980),ylab="Gwh", xlab = "Year",main="Australian electricity production")
+seasonplot(elec, s=12, year.labels = F,main="Electricidad", ylab="Año",col=rainbow(20),year.labels.left=TRUE,pch=10)
+
+plot(bricksq, ylab="million units", xlab="Year", main="Australian clay brick production")
+seasonplot(bricksq, s=12, year.labels = F, main="Electricidad", ylab="Año", col=rainbow(20), year.labels.left = TRUE,pch=2)
+
+plot(hsales, main="Sales of new one-family houses, USA", ylab="Total sales", xlab="Year")
+seasonplot(hsales, s=12, year.labels = TRUE, main="Valor accoines ICA", ylab="Valor cierre", col=rainbow(20), year.labels.left = TRUE, pch=15)
+
+dec <- decompose(bricksq)
+# Eliminando tendencia 
+sinesta <- bricksq - dec$seasonal
+sintend <- bricksq - dec$trend
+
+plot(sinesta)
+plot(sintend)
