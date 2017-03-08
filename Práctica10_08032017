@@ -1,0 +1,33 @@
+# Series de Tiempo
+# 08 de marzo del 2017
+
+### Cuando usar modelo aditivo o multiplicativo
+# Aditivo se utiliza cuando la magnitud de las fluctuiaciones estacionales de la serie no varía la tendencia al hacerlo.
+
+## Multiplicativo
+# Estos modelos son apropiados cuando la magnitud de las fluctuaciones estacionales de la serie de tiempo crece
+# y decrece proporcionalmente con los crecimientos y decrecimientos de la tendencia respectivamente
+
+# Hay dos modelos que podemos descomponer
+# 1. Modelo aditivo xt = mt + st + zt
+# 2. Modelo multiplicativo xt = mtA * st *zt
+
+desocupacion1 <- data.frame(read.csv("C://Users//SALA-D31//Downloads//Desocupacion.csv"))
+desocupacion <- ts(desocupacion1, frequency = 4, start = (2005))
+dedesocupacion <- decompose(desocupacion)
+demuldesocupacion <- decompose(desocupacion, type = "mult")
+
+plot(desocupacion)
+plot(dedesocupacion)
+lines(eeadj, col="blue")
+plot(demuldesocupacion)
+
+# Desestacionalizar una serie
+# Poder predecir nuevos datos con mayor precisión y sin contar factores externos al comportamiento de los datos
+
+install.packages("fpp")
+require(fpp)
+
+eeadj <- seasadj(dedesocupacion)
+eeadj
+plot(eeadj)
