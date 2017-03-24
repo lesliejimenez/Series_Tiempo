@@ -1,0 +1,23 @@
+# Series de Tiempo
+# 24 de marzo del 2017
+
+# Deriva: consiste en que el pronostico puede incrementar o reducirse dependiendo del promedio de los cambio 
+#        historicos de la ST
+
+install.packages("forecast")
+require(forecast)
+
+rwf(desocts, h = 4, drift = TRUE)
+
+desocupacionmod1 <- meanf(desocts, h=12) ## metodo del promedio
+desocupacionmod2 <- naive(desocts, h=4)
+desocupacionmod3 <- snaive(desocts, h=4)
+desocupacionmod4 <- rwf(desocts, h=4, drift=T)
+
+plot (desocupacionmod1, main="Pronostico de desocupacion trimestral")
+lines(desocupacionmod2$mean, col=5)
+lines(desocupacionmod3$mean, col=6)
+lines(desocupacionmod4$mean, col=7)
+legend("topleft", lty=1, col=c(5,6,7,8), legend=c("media", "ingenuo", "ingenuo estacional", "deriva"))
+
+names(desocupacionmod2)
