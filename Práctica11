@@ -1,0 +1,27 @@
+PIB <- read.csv("C://Users//SALA-D31//Desktop//crecimiento PIB.csv")
+PIBts <- ts(PIB, frequency = 1, start = (1960))
+acf(PIBts)
+desoc <- read.csv("C://Users//SALA-D31//Desktop//Desocupacion.csv")
+desocts <- ts (desoc, frequency = 4, start = (2005))
+
+## Modelos lineales para pronosticar
+
+# Son la aplicación de pronósticos lineales como el ingenuo, promedio, ingenuo estacional y el de deriva.
+
+# Ingenuo: basado en la última observación que arroja la ST. Asume que la observación más importante es 
+#         la última.
+
+require(forecast)
+naive(PIBts, h=4)
+
+# Promedio: da el mismo peso a todos los datos u observaciones, es decir, se asume que todas las observaciones
+#         tienen la misma importancia por lo que el pronóstico es un promedio de todas las observaciones
+
+meanf(desocts, h=4)
+plot(meanf(desocts, h=4))
+
+# Estacional: utilizado en ST con alta estacionalidad, cosiste en darle el mayor peso o ponderación al dato del 
+#           mismo periodo en el año anterior.
+#           Ejemplo: trimestre 2 del año 2005 = trimestre 2 del año 2006
+
+snaive(desocts, h=4)
