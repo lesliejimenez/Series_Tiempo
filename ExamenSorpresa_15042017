@@ -1,0 +1,75 @@
+# Series de Tiempo
+# 17 de abril del 2017
+
+# Examen Sorpresa
+
+# Ejercicio: bajar acciones de ICA, NETFLIX, TELEVISA y TVAZTECA diarios
+# Ejercicio de cierrre 2016
+# Ajustar 4 modelos de ajustado exponencial simple (alpha = 0.2, 0.4, 0.6, 0.8)
+# Graficarlos en una sola gráfica
+# Con la gráfica, decidir cuál de los 4 es el mejor ajuste que tiene.
+# Una vez decidido cuál es el mejor ajuste, aplicar evaluación de los ajustes y utilizar las
+#  medidas MAE y RMSE extrayéndolas de tal forma que formen un vector que compare estas medidas
+#  e indique que alpha es la mejor.
+
+TVAZTECA <- ts(read.csv("C://Users//SALA-D31//Desktop//TVAZTECA.CSV"),frequency = 252,start = (2016))
+plot(TVAZTECA)
+# Esta serie de tiempo no cuenta con tendencia
+
+
+require(forecast)
+
+MODELO1 <- ses(TVAZTECA,alpha = 0.2,initial = "simple",h=8)
+MODELO2 <- ses(TVAZTECA,alpha = 0.4,initial = "simple",h=8)
+MODELO3 <- ses(TVAZTECA,alpha = 0.6,initial = "simple",h=8)
+MODELO4 <- ses(TVAZTECA,alpha = 0.8,initial = "simple",h=8)
+
+plot(MODELO1)
+lines(MODELO1$fitted,col="blue")
+lines(MODELO2$fitted,col="red")
+lines(MODELO3$fitted,col="green")
+lines(MODELO4$fitted,col="purple")
+lines(MODELO1$mean,col="blue")
+lines(MODELO2$mean,col="red")
+lines(MODELO3$mean,col="green")
+lines(MODELO4$mean,col="purple")
+
+AJUSTE1 <- TVAZTECA-MODELO1$fitted
+mean(abs(AJUSTE1))
+sqrt(mean(AJUSTE1^2))
+EVALUACION1 <- accuracy(MODELO1)
+EVALUACION1
+
+AJUSTE2 <- TVAZTECA-MODELO2$fitted
+mean(abs(AJUSTE2))
+sqrt(mean(AJUSTE2^2))
+EVALUACION2 <- accuracy(MODELO2)
+EVALUACION2
+
+AJUSTE3 <- TVAZTECA-MODELO3$fitted
+mean(abs(AJUSTE3))
+sqrt(mean(AJUSTE3^2))
+EVALUACION3 <- accuracy(MODELO3)
+EVALUACION3
+
+AJUSTE4 <- TVAZTECA-MODELO4$fitted
+mean(abs(AJUSTE4))
+sqrt(mean(AJUSTE4^2))
+EVALUACION4 <- accuracy(MODELO4)
+EVALUACION4
+
+MAE <- c(EVALUACION1[3],EVALUACION2[3],EVALUACION3[3],EVALUACION4[3])
+MINMAE <- min(MAE)
+
+RMSE <- c(EVALUACION1[2],EVALUACION2[2],EVALUACION3[2],EVALUACION4[2])
+MINRMSE <- min(RMSE)
+
+RESULTADOMAE <- ifelse(MINMAE==EVALUACION1[3],"MODELO 1",
+                  ifelse(MINMAE==EVALUACION2[3],"MODELO 2",
+                      ifelse(MINMAE==EVALUACION3[3],"MODELO 3",
+                          ifelse(MINMAE==EVALUACION4[3],"MODELO 4",0 ) ) ) )
+
+RESULTADORMSE <- ifelse(MINRMSE==EVALUACION1[2],"MODELO 1",
+                       ifelse(MINRMSE==EVALUACION2[2],"MODELO 2",
+                              ifelse(MINRMSE==EVALUACION3[2],"MODELO 3",
+                                     ifelse(MINRMSE==EVALUACION4[2],"MODELO 4",0 ) ) ) )
