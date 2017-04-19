@@ -1,0 +1,66 @@
+# Series de Tiempo
+# 19 de abril del 2017
+
+TVAZTECA <- ts(read.csv("C://Users//SALA-D31//Desktop//TVAZTECA.CSV"),frequency = 252,start = (2016))
+plot(TVAZTECA)
+
+require(fpp)
+
+MODELO1 <- ses(TVAZTECA,alpha = 0.2,initial = "simple",h=4)
+MODELO2 <- ses(TVAZTECA,alpha = 0.4,initial = "simple",h=4)
+MODELO3 <- ses(TVAZTECA,alpha = 0.6,initial = "simple",h=4)
+MODELO4 <- ses(TVAZTECA,alpha = 0.8,initial = "simple",h=4)
+
+# Análisis de residuales
+
+#  Lo que se va a analizar de los residuales es que cumplan con las propiedades de residuales
+# que consisten en:
+#    1. Los residuales no esten correlacionados.
+#    2. Tiene media cero.
+#    3. Tienen varianza constante.
+#    4. Los residuales están normalmente distribuidos.
+#  Para esto, en R se tiene que obtener los residuales de cada uno de los 4 modelos con la 
+# finalidad de analizarlos y conocer su comportamiento.
+#  Para lo anterior, primero vamos a graficar nuestros datos con los valores ajustados para
+# después extraer losresiduales de cada modelo y comenzar los análisis correspondientes.
+
+plot(MODELO1)
+lines(MODELO1$fitted,col="blue")
+lines(MODELO2$fitted,col="red")
+lines(MODELO3$fitted,col="green")
+lines(MODELO4$fitted,col="purple")
+
+RESIDUAL1 <- residuals(MODELO1)
+RESIDUAL2 <- residuals(MODELO2)
+RESIDUAL3 <- residuals(MODELO3)
+RESIDUAL4 <- residuals(MODELO4)
+
+plot(RESIDUAL1)
+plot(RESIDUAL2)
+plot(RESIDUAL3)
+plot(RESIDUAL4)
+
+hist(RESIDUAL1,nclass = "FD")
+hist(RESIDUAL2,nclass = "FD")
+hist(RESIDUAL3,nclass = "FD")
+hist(RESIDUAL4,nclass = "FD")
+
+# Prueba de autocorrelaciones a los residuales
+#  Para analizar las autocorrelaciones hemos visto que utilizamos 
+
+acf(RESIDUAL1, main="Residual1")
+acf(RESIDUAL2, main="Residual2")
+acf(RESIDUAL3, main="Residual3")
+acf(RESIDUAL4, main="Residual4")
+
+#  Para comprobar la correlación de los residuales, utilizamos una prueba que se llama ljung box,
+# que nos permite saber con mayor certeza si existe correlación o no de los residuales.
+
+Box.test(RESIDUAL1,lag = 10,type = "Lj")
+Box.test(RESIDUAL2,lag = 10,type = "Lj")
+Box.test(RESIDUAL3,lag = 10,type = "Lj")
+Box.test(RESIDUAL4,lag = 10,type = "Lj")
+
+#  El estadístico Q de Ljung Box, prueba la hipótesis nula de que las autocorrelaciones de
+# hasta un desfase k son iguales a cero (los valores de los datos son aleatorios e independientes
+# hasta un cierto número de desfases). 
