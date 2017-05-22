@@ -1,0 +1,68 @@
+# Series de tiempo
+# 22 de mayo del 2017
+
+cemex <- ts(read.csv("C://Users//SALA-D31//Desktop//Cemex.csv"), frequency = 252, start = (2016))
+bimbo <- ts(read.csv("C://Users//SALA-D31//Desktop//bimbo.csv"),frequency = 252,start = (2016))
+
+# Revisar si la serie es estacionaria
+
+# Se aplica la prueba de raíz unitaria a través de la función adf.test y esperamos que el p-value < 0.05
+
+require(fpp)
+
+adf.test(bimbo) # P-value 
+
+dbimbo <- diff(bimbo) # Se aplica la 1ra diferenciación,  ya que la serie original no es estacionaria
+adf.test(dbimbo) # En la 1ra diferenciación, la serie se vuelve estacionaria
+
+acf(dbimbo) # Se determina el valor de q, el cual está asociado a los modelos de promedios móviles. q=2
+
+# Para determinar el valor de p que se relaciona con los modelos autoregresivos, se utiliza la fn. pacf()
+pacf(dbimbo) # De acuerdo al correlograma de pacf, el valor de p es 4
+
+# Se propone un modelo ARIMA (p,d,q) 
+modelobimbo <- Arima(bimbo, order = c(4,1,3))
+modelobimbo
+
+modelobimbo1 <- Arima(bimbo, order = c(0,1,0))
+modelobimbo1
+
+# El modelo que arroje el menor AICc será el mejor modelo con el criterio AIKAIKE (modelobimbo)
+
+modeloresiduales1 <- residuals(modelobimbo1)
+Box.test(modeloresiduales1,lag=12,type = "Ljung-Box") # P-value sugiere grandes residuales
+
+modelo11 <- forecast(modelobimbo1,h=12)
+x11()
+plot(forecast(modelobimbo1, h=12),include = 18)
+
+auto.arima(bimbo)
+
+modeloresiduales1 <- residuals(modelobimbo)
+Box.test(modeloresiduales,lag=12,type = "Ljung-Box") # P-value sugiere grandes residuales
+
+modelo1 <- forecast(modelobimbo,h=12)
+x11()
+plot(forecast(modelobimbo, h=12),include = 18)
+
+
+
+adf.test(cemex)
+
+dcemex <- diff(cemex)
+adf.test(dcemex) # p-value=0.01
+
+acf(dcemex) # q=0
+
+pacf(dcemex) # p=1
+
+modelocemex <- Arima(cemex, order=c(1,1,0))
+modelocemex
+
+modeloresidualescemex <- residuals(modelocemex)
+Box.test(modeloresidualescemex,lag = 12,type = "Ljung-Box")
+
+modcemex <- forecast(modelocemex,h=12)
+plot(forecast(modelocemex,h=12),include=18)
+
+auto.arima(cemex)
