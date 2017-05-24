@@ -1,0 +1,58 @@
+# Series de Tiempo
+# 24 de mayo del 2017
+
+amx<-read.csv("C://Users//SALA-D31//Downloads//amx.csv")
+
+
+
+cc1<-ts(amx, frequency = 252, start=2016)
+
+
+
+zz<-Arima(cc1, order=c(1,0,0))
+zz
+
+#yt=c+phi1(Yt-1)+phi2(Yt-2)+...+phip(Yt-p)+et
+#en este caso el modelo AR(1) se plantea de la siguiente manera:
+#yt=12.6921+.9899(Yt-1)+et... en este caso phi1=.9899
+
+#si estuvieramos un modelo Autorregresivo de orden 2 se expresa como modelo arima de la sig. manera:
+zz2<-Arima(cc1, order=c(2,0,0))
+zz2
+#en este caso el modelo AR(2) se plantea de la sig. manera:
+#yt=12.6795+1.0650(Yt-1)-.0763(Yt-2)+et...en este caso phi1=1.0650 y phi2=-.0763
+
+#Ahora bien si tenemos los promedios moviles MA(q) se puede expresar
+#yt=c+teta1(et-1)+...+tetaq(et-q)
+
+yy<-Arima(cc1, order=c(0,0,1)) #en este caso es un MA(1)
+yy
+#yt=12.3179+.9103(et-1)+et en este caso teta1=.9103
+
+yy2<-Arima (cc1, order=c(0,0,2))
+yy2
+#yt=12.3223+1.3925(et-1)+.7120(et-2)+et 
+
+
+## Modelos ARIMA  (con diferernciacion)
+
+#y't=c+fil(Y't-1)+...+fip(Y't-p)+teta1(et-1)+teta2(et-2)+...+tetap(et-q)+et
+
+#Para un modelo ARIMA con p=2, d=3, q=2 Expresa:
+
+yy3 <- Arima(cc1, order =c(2,3,2))
+
+#yt= c+ fil(Yt-1)-+fi2(Yt-2)+...+fip(Yt-p)+et
+
+yy3
+
+# con este modelo expresamos:
+
+#Y'''y=.0716(Y'''t-1)-.1527(Y'''t-2)-1.9987(et-1)+.9988(et-2)+et
+
+vitro<-read.csv("C://Users//SALA-D31//Downloads//vitro.csv")
+
+cc2<-ts(vitro, frequency = 252, start=2016)
+
+yt3 <- Arima(cc2, order =c(3,4,0))
+
